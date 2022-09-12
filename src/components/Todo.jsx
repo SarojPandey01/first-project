@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
-import './Todo.css'
+import React, { useState } from 'react';
+import './Todo.css';
 
 const Todo = () => {
 	const [input, setInput] = useState('');
 	const [todos, setTodos] = useState(JSON.parse(localStorage.getItem('todos')) || []);
 
-	console.log(input)
-	console.log(todos)
+	console.log(input);
+	console.log(todos);
 
 	// Local Storage Setup
 	// const getLocalTodos = () => {
