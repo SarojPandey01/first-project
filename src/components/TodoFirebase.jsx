@@ -4,59 +4,57 @@ import "./Todo.css";
 
 //import firebases file
 import firebase from "firebase";
-import db from "./firebase";
+import db from "../firebase";
 
-const Todo = () => {
+
+const TodoFirebase = () => {
   const [input, setInput] = useState("");
-  const [todos, setTodos] = useState(
-    JSON.parse(localStorage.getItem("todos")) || []
-  );
+  const [todos, setTodos] = useState([]);
 
   console.log(input);
   console.log(todos);
 
 
 
-  // set items to localStorage
-  const saveLocalTodos = (todo) => {
-    // check if there is already items in localStorage
-    if (localStorage.getItem("todos") === null) {
-      localStorage.setItem("todos", JSON.stringify([]));
-    } else {
-      let todoLocal = JSON.parse(localStorage.getItem("todos"));
-      todoLocal.push(todo);
-      localStorage.setItem("todos", JSON.stringify(todoLocal));
-    }
-  };
 
-  // CREATE: Add a new todo
-  function handleSubmit() {
+
+  // CREATE: Add a new todo and store it in the database
+  function handleSubmit(){
+    db.collection('todos').add({
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      todo: input
+    });
     setTodos([...todos, input]);
-    saveLocalTodos(input);
-    setInput("");
+    setInput('');
+
+
   }
+
 
   //UPDATE: Update the individual items in the array having index
-  function updateTodo(index) {
-    const newTodos = [...todos];
-    // newTodos[index] = input;
-    newTodos.splice(index, 1, input);
-    setTodos(newTodos);
-    setInput("");
+  function updateTodo(){
+
+
+
   }
+
 
   //DELETE: Delete the individual items in the array having index
-  function deleteTodo(index) {
-    const newTodos = [...todos];
-    newTodos.splice(index, 1);
-    setTodos(newTodos);
-  }
 
-  // Remove All: It removes all the items in the array
-  function removeall() {
-    setTodos([]);
-    localStorage.setItem("todos", JSON.stringify([]));
+  function deleteTodo(){
+
+
+
   }
+ 
+  // Remove All: It removes all the items in the array
+
+function removeall(){
+
+
+
+}
+
 
   return (
     <div className="todo">
@@ -117,4 +115,4 @@ const Todo = () => {
   );
 };
 
-export default Todo;
+export default TodoFirebase;
